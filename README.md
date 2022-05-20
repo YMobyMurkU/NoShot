@@ -1,4 +1,5 @@
 FIRST TIME Setup
+
 1) Download and Copy NoShot folder to destination
 2) Open NoShotSetupScripts-START_HERE folder 
 3)Right click and 'Run As Administrator'on 1a-NoShot-AdminSetup. (Downloads/Installs Python/Tesseract and adds Tesseract program files to path)
@@ -20,5 +21,6 @@ How To Use
 3) Enjoy
 
 TIPS
+
 When in station - Zoom out and try and get population stats over darkest place
 
