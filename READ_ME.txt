@@ -13,7 +13,7 @@ FIRST TIME Setup
 4) Restart Computer
 
 
-How To Uses
+How To Use
 
 1) Go to NoShot folder and double click on 'Run NoShot-Run.bat'
 2) Enter info into prompts and select population stats
