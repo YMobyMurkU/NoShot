@@ -1,5 +1,3 @@
-#requirements
-#Use pip or similar to install: requests tailer
 import sys
 from pathlib import Path
 import requests
@@ -22,9 +20,11 @@ def PostDiscordMessage(channelWebHook, logEvent):
         print(f'Failure Posting Message: {logEvent}')
 
 
+#function to watch log
 def watch_log(logFile):
-    #for each line in log file - note this begins with NEW data sent AFTER program is started
+    #initialize last log var
     lastLogEvent = ""
+    #for each line in log file - note this begins with NEW data sent AFTER program is started
     for logEvent in tailer.follow(open(logFile)):
         try:
             #calls Post Discord Msg function with the channel's webhook and the log file's line
@@ -32,19 +32,24 @@ def watch_log(logFile):
                 logEventSplit = logEvent.split(',')
                 lastLogEventSplit = lastLogEvent.split(',')
                 try:
+                    #if hostile or neutral increase
                     if int(logEventSplit[2]) > int(lastLogEventSplit[2]) or int(logEventSplit[3] > int(lastLogEventSplit[3])):
+                        #if hostile or neutral increase greater than or equal to alert threshold
                         if abs(int(logEventSplit[2]) - int(lastLogEventSplit[2])) >= int(alertThreshold) or abs(int(logEventSplit[3]) - int(lastLogEventSplit[3])) >= int(alertThreshold):
                             logMessage = (f'ALERT: System: {logEventSplit[0]} | Hostile: {logEventSplit[2]} | Neutral: {logEventSplit[3]} | Criminal: {logEventSplit[1]}\n{alertPingGroup}')
                             PostDiscordMessage(channelWebHook, f'{logMessage}')
+                        #else if hostile or neutral increase greater than or equal to warning threshold    
                         elif abs(int(logEventSplit[2]) - int(lastLogEventSplit[2])) >= int(basicThreshold) or abs(int(logEventSplit[3]) - int(lastLogEventSplit[3])) >= int(basicThreshold):
                             logMessage = (f'WARNING: System: {logEventSplit[0]} | Hostile: {logEventSplit[2]} | Neutral: {logEventSplit[3]} | Criminal: {logEventSplit[1]}\n{basicPingGroup}')
                             PostDiscordMessage(channelWebHook, f'{logMessage}')
+                        #otherwise 
                         else:
                             logMessage = (f'System: {logEventSplit[0]} | Hostile: {logEventSplit[2]} | Neutral: {logEventSplit[3]} | Criminal: {logEventSplit[1]}\n')
                 except IndexError:
                     continue
-                    #print(f'Started Log Monitor for {logEventSplit[0]}')
+                #set the current log to last log
                 lastLogEvent = logEvent
+        #clean exit on Ctrl + C
         except KeyboardInterrupt:
             print('TERMINATING: NoShot Discord Services')
 
