@@ -4,7 +4,7 @@ FIRST TIME Setup
 
 2- Open NoShotSetupScripts-START_HERE folder 
 
-3- Right click and 'Run As Administrator'on 1a-NoShot-AdminSetup. (Downloads/Installs Python/Tesseract and adds Tesseract program files to path)
+3- Right click and 'Run As Administrator' 1a-NoShot-AdminSetup. (Downloads/Installs Python/Tesseract and adds Tesseract program files to path)
      
 
     Python Install
