@@ -32,13 +32,15 @@ def watch_log(logFile):
                 logEventSplit = logEvent.split(',')
                 lastLogEventSplit = lastLogEvent.split(',')
                 try:
-                    if int(logEventSplit[2]) > int(lastLogEventSplit[2]):
-                        if abs(int(logEventSplit[2]) - int(lastLogEventSplit[2])) >= 1:
-                            logMessage = (f'ALERT: System: {logEventSplit[0]} | Hostile: {logEventSplit[2]} | Neutral: {logEventSplit[3]} | Criminal: {logEventSplit[1]}\n@here')
+                    if int(logEventSplit[2]) > int(lastLogEventSplit[2]) or int(logEventSplit[3] > int(lastLogEventSplit[3])):
+                        if abs(int(logEventSplit[2]) - int(lastLogEventSplit[2])) >= int(alertThreshold) or abs(int(logEventSplit[3]) - int(lastLogEventSplit[3])) >= int(alertThreshold):
+                            logMessage = (f'ALERT: System: {logEventSplit[0]} | Hostile: {logEventSplit[2]} | Neutral: {logEventSplit[3]} | Criminal: {logEventSplit[1]}\n{alertPingGroup}')
+                            PostDiscordMessage(channelWebHook, f'{logMessage}')
+                        elif abs(int(logEventSplit[2]) - int(lastLogEventSplit[2])) >= int(basicThreshold) or abs(int(logEventSplit[3]) - int(lastLogEventSplit[3])) >= int(basicThreshold):
+                            logMessage = (f'WARNING: System: {logEventSplit[0]} | Hostile: {logEventSplit[2]} | Neutral: {logEventSplit[3]} | Criminal: {logEventSplit[1]}\n{basicPingGroup}')
                             PostDiscordMessage(channelWebHook, f'{logMessage}')
                         else:
                             logMessage = (f'System: {logEventSplit[0]} | Hostile: {logEventSplit[2]} | Neutral: {logEventSplit[3]} | Criminal: {logEventSplit[1]}\n')
-                            PostDiscordMessage(channelWebHook, f'{logMessage}')
                 except IndexError:
                     continue
                     #print(f'Started Log Monitor for {logEventSplit[0]}')
@@ -50,7 +52,9 @@ def watch_log(logFile):
 if __name__ == '__main__':
     cmdArgs = (sys.argv)
     logFile = cmdArgs[1]
-    #print(logFile)
     channelWebHook = cmdArgs[2]
-    #print(channelWebHook)
+    basicThreshold = cmdArgs[3]
+    basicPingGroup = cmdArgs[4]
+    alertThreshold = cmdArgs[5]
+    alertPingGroup = cmdArgs[6]
     logReport = watch_log(logFile)
