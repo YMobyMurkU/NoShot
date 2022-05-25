@@ -1,1 +1,1 @@
-powershell.exe /c clear;.\NoShotVirtEnv\Scripts\activate.bat;py .\NoShotScripts\NoShot-Pub.py
+powershell.exe /c clear;.\NoShotVirtEnv\Scripts\activate.bat;py .\NoShot.py
