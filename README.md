@@ -25,9 +25,22 @@ FIRST TIME Setup
 
 How To Use
 
-1) Go to NoShot folder and double click on 'Run NoShot-Run.bat'
+1) Go to NoShot folder and double click on 'NoShot-Run-LogOnly.bat' OR 'NoShot-Run-Report.bat'
 2) Enter info into prompts and select population stats
 3) Enjoy
+
+     
+
+    NoShot-Run-LogOnly.bat
+    
+    a - Logs only to computer - no 3rd party service integration
+    
+
+    NoShot-Run-Report.bat
+
+    a - Reports to 3rd party service - (discord only atm)
+
+
 
 TIPS
 When in station - Zoom out and try and get population stats over darkest place
